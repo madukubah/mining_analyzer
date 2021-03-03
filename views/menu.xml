@@ -2,6 +2,8 @@
 <odoo>
 
     <menuitem id="menu_mining_analyzer" name="Analyzer" sequence="99" 
-			parent="mining_production.mining_production_top"/>
+			parent="mining_production.mining_production_top"
+            groups="mining_production.production_group_manager"
+            />
     
 </odoo>
