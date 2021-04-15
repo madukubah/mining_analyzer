@@ -24,11 +24,11 @@ class MiningAnalyzerRitase(models.TransientModel):
 
     @api.multi
     def action_analyze(self):    
+        self.env['fleet.vehicle.cost'].search([])._compute_amount()
+        return True
         ritase_orders = self.env['production.ritase.order'].search([ ( 'date', '>=', self.start_date ), ( 'date', '<=', self.end_date ) ], order="date asc, shift asc")
         message = ""
         for ritase_order in ritase_orders:
-            # for counter in ritase_order.counter_ids:
-            #     counter.repair()
 
             if ritase_order.product_id.id not in self.production_config_id.other_product_ids.ids:
                 if ritase_order.product_uom_qty == 0:
@@ -44,6 +44,9 @@ class MiningAnalyzerRitase(models.TransientModel):
                 if not find_driver :
                     message += "["+ritase_order.name+"] ["+driver_name+"] doesn`t register on driver table \n"
                     
+                if counter.minutes < 0 :
+                    message += "Minutes Anomaly Dump Truck Found in ["+ritase_order.name+"]. \n"
+
                 if self.production_config_id.rit_vehicle_tag_id.id not in counter.vehicle_id.tag_ids.ids :
                     message += "Only Dump Truck allowed to fill ritase form ["+ritase_order.name+"]. \n"
                     # raise UserError(_('Only Dump Truck allowed to fill ritase form [%s]') %( ritase_order.name ) )
