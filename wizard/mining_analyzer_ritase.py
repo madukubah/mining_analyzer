@@ -24,8 +24,8 @@ class MiningAnalyzerRitase(models.TransientModel):
 
     @api.multi
     def action_analyze(self):    
-        self.env['fleet.vehicle.cost'].search([])._compute_amount()
-        return True
+        # self.env['fleet.vehicle.cost'].search([])._compute_amount()
+        # return True
         ritase_orders = self.env['production.ritase.order'].search([ ( 'date', '>=', self.start_date ), ( 'date', '<=', self.end_date ) ], order="date asc, shift asc")
         message = ""
         for ritase_order in ritase_orders:
