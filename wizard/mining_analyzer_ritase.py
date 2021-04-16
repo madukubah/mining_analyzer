@@ -24,22 +24,7 @@ class MiningAnalyzerRitase(models.TransientModel):
 
     @api.multi
     def action_analyze(self):    
-        # self.env['fleet.vehicle.cost'].search([])._compute_amount()
-        vehicle_costs = self.env['fleet.vehicle.cost'].search([])
-        _sum = 0
-        for vehicle_cost in vehicle_costs:
-            services = self.env['fleet.vehicle.log.services'].search([ ( "cost_id", "=", vehicle_cost.id ) ])
-            if not services : 
-                _logger.warning( vehicle_cost.vehicle_id.name )
-                _logger.warning( vehicle_cost.cost_subtype_id.name )
-                _logger.warning( vehicle_cost.product_id.name )
-                _logger.warning( vehicle_cost.amount )
-                _sum += vehicle_cost.amount
-                vehicle_cost.unlink()
-
-        _logger.warning( _sum )
-
-        return True
+        
         ritase_orders = self.env['production.ritase.order'].search([ ( 'date', '>=', self.start_date ), ( 'date', '<=', self.end_date ) ], order="date asc, shift asc")
         message = ""
         for ritase_order in ritase_orders:
