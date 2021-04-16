@@ -39,7 +39,6 @@ class MiningAnalyzerHourmeter(models.TransientModel):
                     " AND date BETWEEN '"+self.start_date+"' AND '"+self.end_date+"' " +\
                     " ORDER BY date asc, start_datetime asc ")
             
-            _logger.warning( request )
             self.env.cr.execute(request)
             
             hourmeter_logs = self.env.cr.dictfetchall()
